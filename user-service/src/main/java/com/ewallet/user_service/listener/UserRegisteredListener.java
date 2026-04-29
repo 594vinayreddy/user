@@ -6,6 +6,7 @@ import com.ewallet.user_service.event.UserRegisteredEvent;
 import com.ewallet.user_service.repository.UserProfileRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +18,7 @@ public class UserRegisteredListener {
     private final UserProfileRepository userProfileRepository;
 
     @RabbitListener(queues = RabbitMQConfig.USER_QUEUE)
-    public void onUserRegistered(UserRegisteredEvent event) {
+    public void onUserRegistered(@NotNull UserRegisteredEvent event) {
         log.info("User Service received event for userId: {}", event.getUserId());
 
         if (userProfileRepository.existsByEmail(event.getEmail())) {
