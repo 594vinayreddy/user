@@ -12,8 +12,14 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfig {
 
     public static final String EXCHANGE         = "ewallet.exchange";
+
     public static final String USER_QUEUE       = "user.registered.queue";
+    public static final String USER_TO_WALLET_QUEUE = "user_to_wallet.registered.queue";
+    public static final String USER_TO_AUTH_QUEUE = "user_to_auth.registered.queue";
+
     public static final String USER_ROUTING_KEY = "user.registered";
+    public static final String USER_TO_WALLET_ROUTING_KEY = "user_to_wallet.registered";
+    public static final String USER_TO_AUTH_ROUTING_KEY = "user_to_auth.registered";
 
     @Bean
     public DirectExchange ewalletExchange() {
@@ -26,11 +32,37 @@ public class RabbitMQConfig {
     }
 
     @Bean
+    public Queue userToWalletQueue() {
+        return QueueBuilder.durable(USER_TO_WALLET_QUEUE).build();
+    }
+
+    @Bean
+    public Queue userToAuthQueue() {
+        return QueueBuilder.durable(USER_TO_AUTH_QUEUE).build();
+    }
+
+    @Bean
     public Binding userBinding(Queue userQueue, DirectExchange ewalletExchange) {
         return BindingBuilder
                 .bind(userQueue)
                 .to(ewalletExchange)
                 .with(USER_ROUTING_KEY);
+    }
+
+    @Bean
+    public  Binding userToWalletBinding(Queue userToWalletQueue, DirectExchange ewalletExchange) {
+        return BindingBuilder
+                .bind(userToWalletQueue)
+                .to(ewalletExchange)
+                .with(USER_TO_WALLET_ROUTING_KEY);
+    }
+
+    @Bean
+    public Binding userToAuthBinding(Queue userToAuthQueue, DirectExchange ewalletExchange) {
+        return BindingBuilder
+                .bind(userToAuthQueue)
+                .to(ewalletExchange)
+                .with(USER_TO_AUTH_ROUTING_KEY);
     }
 
     @Bean
