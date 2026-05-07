@@ -1,6 +1,5 @@
 package com.ewallet.user_service.controller;
 
-import com.ewallet.user_service.entity.UserProfile;
 import com.ewallet.user_service.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

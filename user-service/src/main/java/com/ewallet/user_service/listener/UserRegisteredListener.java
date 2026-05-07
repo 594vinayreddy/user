@@ -17,7 +17,7 @@ public class UserRegisteredListener {
 
     private final UserProfileRepository userProfileRepository;
 
-    @RabbitListener(queues = RabbitMQConfig.USER_QUEUE)
+    @RabbitListener(queues = RabbitMQConfig.USER_QUEUE )
     public void onUserRegistered(@NotNull UserRegisteredEvent event) {
         log.info("User Service received event for userId: {}", event.getUserId());
 

@@ -32,10 +32,10 @@ public class UserService {
             log.info("User with id {} deleted successfully", id);
             // Notify wallet service to delete the wallet
             rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE,
-                                          RabbitMQConfig.USER_TO_WALLET_ROUTING_KEY,
+                                          RabbitMQConfig.USER_TO_AUTH_QUEUE,
                                           userEvent);
             rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE,
-                                          RabbitMQConfig.USER_TO_AUTH_ROUTING_KEY,
+                                          RabbitMQConfig.USER_TO_WALLET_ROUTING_KEY,
                                           userEvent);
         } else {
             log.warn("Attempted to delete non-existent user with id {}", id);
