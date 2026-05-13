@@ -11,12 +11,6 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/")
-    public ResponseEntity<?> home(){
-        return ResponseEntity.ok("Welcome to User Service!");
-    }
-
-
     @GetMapping("/profile")
     public ResponseEntity<?> getUser(@RequestHeader("X-User-Id") Long id){
         return userService.getUser(id)
